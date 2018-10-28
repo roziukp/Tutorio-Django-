@@ -1,0 +1,52 @@
+{% extends 'mainapp/index.html' %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block style %}
+    <style>
+        body
+            {
+                font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+                background-color: #adb5bd;
+            }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <p><h1 class="text-center pt-5">Personal data</h1></p>
+    <div class="container-fluid">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row container-fluid  justify-content-center mt-4">
+                <div class=" form-group col-4">
+                        <div class="form-group">
+                            <label for="name">Name: </label>
+                            <input type="text" name="{{ form.name.name }}" class="form-control" id="name" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Surname: </label>
+                            <input type="text"  name="{{ form.surname.name }}" class="form-control" id="surname" placeholder="Surname">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail: </label>
+                            <input type="email" name="{{ form.email.name }}" class="form-control" id="email" placeholder="e-mail">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone number: </label>
+                            <input type="text" name="{{ form.telephone.name }}" class="form-control" id="phone" placeholder="phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="img">Profile photo: </label>
+                            <input type="file" name="{{ form.profile_img.name }}" id="img" placeholder="Profile photo">
+                        </div>
+                        <button type="submit" class=" btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'mainapp/index.html' %}
+
+
+{%  block content %}
+<div class="row container-fluid">
+    <div class="container-fluid col-md-12 text-center">
+
+
+        <form method="post">{% csrf_token %}
+          <label>Username:{{ form.username }}</label><br>
+          <label>Password:{{ form.password1 }}</label><br>
+          <label>Confirm your password:{{ form.password2 }}</label><br>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+        {% if messages %}
+        <div class="alert alert-danger mt-4" role="alert">
+           Password should consist letters [A-Z],[a-z],[;,.-:]
+        </div>
+{% endif %}
+
+        <a href="/profile/"><button class="btn btn-primary">Login</button></a>
+        <a href="/login/"><button class="btn btn-primary">Profile info</button></a>
+        <a href="/logout/"><button class="btn btn-primary">LogOut</button></a>
+    </div>
+</div>
+
+{% endblock %}

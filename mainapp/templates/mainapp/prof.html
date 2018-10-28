@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <form method="POST">
+     {% csrf_token %}
+      <label>Name: {{ form.name }}</label><br>
+      <label>Surname: {{ form.surname }}</label><br>
+      <label>Email: {{ form.email }}</label><br>
+      <label>Telephone: {{ form.telephone }}</label><br>
+      <button type="submit">Submit</button>
+     <a href="/logout"><button type="submit"> logout</button></a>
+    </form>
+
+</body>
+</html>

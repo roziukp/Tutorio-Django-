@@ -1,0 +1,59 @@
+{% extends 'mainapp/index.html' %}
+{% load mptt_tags %}
+
+
+{% block post_category %}
+
+    <h1 align="center" class="pt-2">Posts</h1>
+    <div class="container-fluid">
+        <div class="row container-fluid align-items-start">
+            <div class="col-8 offset-1">
+                {% if posts %}
+                    {% for post in posts %}
+                        <div class="card mt-5">
+                                <div class="card-header text-center">
+                                    <h3>{{ post.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p><i><h6>{{ post.body }}</h6></i></p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                     <h6>{{ post.created_at }}</h6>
+                                    <a href="/post/{{ post.id }}/">READ More</a>
+                                </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+            <div class="col-3 " >
+                    <div class="card mt-5">
+                        <div class="card-header text-center">
+                            Categories
+                        </div>
+                        <div class="card-body">
+                            {% if nodes %}
+                                    <ul class="root">
+                                        {% recursetree nodes %}
+                                            <li>
+                                                <a href="/category/{{ node.name }}">{{ node.name }}</a>
+                                                {% if not node.is_leaf_node %}
+                                                    <ul class="children">
+                                                        {{ children }}
+                                                    </ul>
+                                                {% endif %}
+                                            </li>
+                                        {% endrecursetree %}
+                                    </ul>
+                            {% else %}
+                                <p>No category yet!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+

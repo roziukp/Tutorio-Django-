@@ -1,0 +1,31 @@
+{% extends 'mainapp/index.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <form method="post" width="100%">
+             <div class="row container-fluid  justify-content-center mt-4">
+                {% csrf_token %}
+                    <div class=" form-group col-4   ">
+                            <div class="form-group">
+                                <label for="subject">Subject: </label>
+                                <input type="text" name="{{ form.subject.name }}" class="form-control" id="subject" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <label for="education">Education: </label>
+                                <input type="text"  name="{{ form.education.name }}" class="form-control" id="education" placeholder="Education">
+                            </div>
+                            <div class="form-group">
+                                <label for="experience">Eperience: </label>
+                                <input type="text" name="{{ form.experience.name }}" class="form-control" id="experience" placeholder="Experience">
+                            </div>
+                            <div class="form-group">
+                                <label for="extra">Extra information: </label>
+                                <textarea name="{{ form.extra_info.name }}" class="form-control" id="extra" placeholder="Extra info"></textarea>
+                            </div>
+
+                            <button type="submit" class=" btn btn-primary">Add CV</button>
+                    </div>
+             </div>
+        </form>
+    </div>
+
+{% endblock %}

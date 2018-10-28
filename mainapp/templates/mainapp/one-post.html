@@ -1,0 +1,60 @@
+{% extends 'mainapp/index.html' %}
+{% load mptt_tags %}
+{% block content %}
+
+
+<h1 align="center" class="pt-2">Posts</h1>
+    <div class="container-fluid">
+        <div class="row container-fluid align-items-start">
+            <div class="col-8 offset-2">
+                {% if posts %}
+                    {% for post in posts %}
+                        <div class="card mt-5">
+                                <div class="card-header text-center">
+                                    <h3>{{ post.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p><i><h6>{{ post.body }}</h6></i></p>
+                                </div>
+                                <div class="card-footer text-muted">
+                                     <h6>{{ post.created_at }}</h6>
+                                </div>
+                    {% endfor %}
+                        </div>
+                        <h1>Comments:</h1>
+                            {% if nodes %}
+                                    <ul class="root">
+                                        {% recursetree nodes %}
+                                            <li class="card mt-4">
+                                                <p class="card-body">
+                                                    Author: {{ node.author }}<br>
+                                                    {{ node.body }}<br>
+                                                    DATE: {{ node.created_at }}
+                                                    {% if not node.is_leaf_node %}
+                                                        <ul class="children">
+                                                            {{ children }}
+                                                        </ul>
+                                                    {% endif %}
+                                                </p>
+                                            </li>
+                                        {% endrecursetree %}
+                                    </ul>
+                            {% else %}
+                                <p>No comment yet!</p>
+                            {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <label>Your comment:
+                                <textarea id="commentbody" name="{{ form.body.name }}"></textarea>
+                            </label>
+                                <button type="submit" id="postcomment" class="btn btn-primary">Submit</button>
+                        </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+

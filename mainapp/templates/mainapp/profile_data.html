@@ -1,0 +1,51 @@
+{% extends 'mainapp/index.html' %}
+
+{% block title %}
+    Profile data
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mt-4">Personal data:</h1>
+    <div class="container mt-2">
+        {% if profile_data %}
+            <div class="row justify-content-center">
+                <div class="col-2" style="background-color: #1c7430">
+                    <img src="{{ profile_data.profile_img.url }}" width="120px" height="120px">
+                </div>
+                <div class="col-9" style="background-color: #6f42c1">
+                    <p>Name: {{ profile_data.name }}</p>
+                    <pa>Surname: {{ profile_data.surname }}</pa>
+                    <p>Email: {{ profile_data.email }}</p>
+                    <p>Telephone: {{ profile_data.telephone }}</p>
+                </div>
+        {% endif %}
+        {% if profile_data.cv %}
+            </div>
+            <div class="row mt-2 justify-content-center">
+                <div class="col-11" style="background-color: #c82333">
+                    <p>Education: {{ profile_data.cv.education }}</p>
+                    <p>Experience: {{ profile_data.cv.experience }}</p>
+                    <p>Subject: {{ profile_data.cv.subject }}</p>
+                    <p>Extra information: {{ profile_data.cv.extra_info }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-11">
+                <a href="/prof"><button class="btn btn-primary">Change data</button></a>
+
+                <a href="cvadd/"><button class="btn btn-primary">Add CV</button></a>
+
+                <a href="/change-password/"><button class="btn btn-primary">Change password</button></a>
+
+            </div>
+        </div>
+    </div>
+{#    {% if messages %}#}
+{#        {% for message in messages %}#}
+{#            {{ message }}#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+{% endblock %}
