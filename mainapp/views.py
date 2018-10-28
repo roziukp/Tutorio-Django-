@@ -203,8 +203,3 @@ def get_one_post(request, post_id=None, parent_id=None):
         redirect('mainapp/post_category.html')
 
 
-
-def check(request):
-
-    return render(request, 'mainapp/jsajax.html')
-
