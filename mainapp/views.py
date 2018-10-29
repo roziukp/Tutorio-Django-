@@ -26,6 +26,7 @@ class Registr(View):
 
     def post(self, request):
         form = self.form_class(request.POST)
+        print('use1:', request.POST.get('use1'))
         if form.is_valid():
             form.save()
             newuser = auth.authenticate(username=form.cleaned_data['username'],
@@ -34,6 +35,8 @@ class Registr(View):
                 auth.login(request, newuser)
                 messages.success(request, 'User has been registered!')
             return redirect('/', {'message': messages})
+        else:
+            return render(request, self.template_name, {'form': form})
 
 # дві функці на одному шаблоні поки що не працює
 class Login(View):
@@ -129,10 +132,10 @@ class FillProfileData(View):
             prof.save()
             messages.success(request, 'Data was aded!')
 
-            # from_email = settings.EMAIL_HOST_USER
-            # to_email = profile.email
-            # message = 'Welcome, {} thanks for registration!'.format(profile.name)
-            # send_mail('', message=message, from_email=from_email, recipient_list=[to_email])
+            from_email = settings.EMAIL_HOST_USER
+            to_email = profile.email
+            message = 'Welcome, {} thanks for registration!'.format(profile.name)
+            send_mail('', message=message, from_email=from_email, recipient_list=[to_email])
 
             return redirect('/')
         else:

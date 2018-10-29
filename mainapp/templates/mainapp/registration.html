@@ -1,22 +1,20 @@
 {% extends 'mainapp/index.html' %}
 
 
-{%  block content %}
+{% block content %}
+
 <div class="row container-fluid">
     <div class="container-fluid col-md-12 text-center">
 
 
-        <form method="post">{% csrf_token %}
-          <label>Username:{{ form.username }}</label><br>
+        <form method="post" id="registr">{% csrf_token %}
+          <label>Username:
+            <input type="text" name="{{ form.username.name }}" id="id_username">
+          </label><br>
           <label>Password:{{ form.password1 }}</label><br>
           <label>Confirm your password:{{ form.password2 }}</label><br>
-          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit" id="send">Submit</button>
         </form>
-        {% if messages %}
-        <div class="alert alert-danger mt-4" role="alert">
-           Password should consist letters [A-Z],[a-z],[;,.-:]
-        </div>
-{% endif %}
 
         <a href="/profile/"><button class="btn btn-primary">Login</button></a>
         <a href="/login/"><button class="btn btn-primary">Profile info</button></a>
@@ -25,3 +23,9 @@
 </div>
 
 {% endblock %}
+
+
+<script type="text/javascript">
+    
+
+</script>
