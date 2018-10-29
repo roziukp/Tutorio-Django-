@@ -32,6 +32,7 @@ urlpatterns = [
     path('change-password-done/', PasswordChangeDoneView.as_view(template_name='mainapp/index.html'),
          name='password_change_done'),
     url(r'^post/(?P<post_id>.+)/$', views.get_one_post, name='onepost'),
+
     # path('post/<int:post_id>/<int:parent_id>/', views.get_one_post, name='onepostcom'),
 ]
 

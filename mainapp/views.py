@@ -38,6 +38,7 @@ class Registr(View):
         else:
             return render(request, self.template_name, {'form': form})
 
+
 # дві функці на одному шаблоні поки що не працює
 class Login(View):
     template_name = 'mainapp/index.html'
@@ -133,8 +134,8 @@ class FillProfileData(View):
             messages.success(request, 'Data was aded!')
 
             from_email = settings.EMAIL_HOST_USER
-            to_email = profile.email
-            message = 'Welcome, {} thanks for registration!'.format(profile.name)
+            to_email = prof.email
+            message = 'Welcome, {} thanks for registration!'.format(prof.name)
             send_mail('', message=message, from_email=from_email, recipient_list=[to_email])
 
             return redirect('/')
@@ -168,9 +169,6 @@ class AddCV(View):
             return redirect('/', context={'messages': messages})
 
 
-
-
-
 def get_posts_by_category(request, category_name=None):
     nodes = models.Category.objects.all()
     if category_name == None:
@@ -178,31 +176,29 @@ def get_posts_by_category(request, category_name=None):
     else:
         posts = models.Post.objects.filter(category__name=category_name)
     return render(request, 'mainapp/post_category.html', {'nodes': nodes,
-                                                  'posts': posts})
-
-
-
-
+                                                          'posts': posts})
 
 
 @login_required
-def get_one_post(request, post_id=None, parent_id=None):
+def get_one_post(request, post_id=None):
     form = CommentForm(request.POST or None)
+    parent_id = request.POST.get('parent_id')
     if post_id is not None:
         posts = models.Post.objects.filter(id=post_id)
-        nodes = models.Comment.objects.filter(post__id=post_id)
+        comments = models.Comment.objects.filter(post__id=post_id)
         if request.POST and form.is_valid():
+
             comment = form.save()
             comment.post = models.Post.objects.get(id=post_id)
             comment.author = models.Profile.objects.get(user=request.user)
+            print(request.POST)
             if parent_id is not None:
                 comment.parent = models.Comment.objects.get(id=parent_id)
             comment.save()
 
         return render(request, 'mainapp/one-post.html', {'posts': posts,
-                                                         'nodes': nodes,
+                                                         'nodes': comments,
                                                          'form': form})
     else:
         redirect('mainapp/post_category.html')
-
 
