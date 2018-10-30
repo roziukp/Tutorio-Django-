@@ -182,18 +182,13 @@ def get_posts_by_category(request, category_name=None):
 @login_required
 def get_one_post(request, post_id=None):
     form = CommentForm(request.POST or None)
-    parent_id = request.POST.get('parent_id')
     if post_id is not None:
         posts = models.Post.objects.filter(id=post_id)
         comments = models.Comment.objects.filter(post__id=post_id)
         if request.POST and form.is_valid():
-
             comment = form.save()
             comment.post = models.Post.objects.get(id=post_id)
             comment.author = models.Profile.objects.get(user=request.user)
-            print(request.POST)
-            if parent_id is not None:
-                comment.parent = models.Comment.objects.get(id=parent_id)
             comment.save()
 
         return render(request, 'mainapp/one-post.html', {'posts': posts,
@@ -201,4 +196,3 @@ def get_one_post(request, post_id=None):
                                                          'form': form})
     else:
         redirect('mainapp/post_category.html')
-

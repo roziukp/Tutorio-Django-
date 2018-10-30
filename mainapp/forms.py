@@ -27,7 +27,7 @@ class CVForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = models.Comment
-        exclude = ['parent', 'author', 'post', 'created_at']
+        exclude = ['author', 'post', 'created_at']
 
 
 

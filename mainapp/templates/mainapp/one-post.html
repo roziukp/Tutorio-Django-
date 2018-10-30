@@ -4,6 +4,7 @@
 
 
 <h1 align="center" class="pt-2">Posts</h1>
+
     <div class="container-fluid">
         <div class="row container-fluid align-items-start">
             <div class="col-8 offset-2">
@@ -30,7 +31,15 @@
                                                     Author: {{ node.author }}<br>
                                                     {{ node.body }}<br>
                                                     DATE: {{ node.created_at }}
-                                                    <button class="answer" name="{{ node.id }}">Answer</button>
+                        <button class="answer"  onclick="diplay_hide('.{{ node.id }}');return false;">Answer</button>
+                        <form method="post"  class="pb-4 {{ node.id }}" style="display: none;">
+                            {% csrf_token %}
+                            <label>Your comment:
+                                <textarea id="commentbody" name="{{ form.body.name }}"></textarea>
+                            </label>
+                                 <input type="hidden" name="{{ form.parent.name }}" value="{{ node.id }}">
+                            <button type="submit"  class="btn btn-primary postcomment">Submit</button>
+                        </form>
                                                     {% if not node.is_leaf_node %}
                                                         <ul class="children">
                                                             {{ children }}
@@ -43,13 +52,13 @@
                             {% else %}
                                 <p>No comment yet!</p>
                             {% endif %}
-                        <form method="post" id="comment">
+                        <form method="post" id="comment" class="pb-4">
                             {% csrf_token %}
                             <label>Your comment:
                                 <textarea id="commentbody" name="{{ form.body.name }}"></textarea>
 
                             </label>
-                                <button type="submit" id="postcomment" class="btn btn-primary">Submit</button>
+                                <button type="submit"  class="btn btn-primary">Submit</button>
                         </form>
                 {% endif %}
             </div>
@@ -57,20 +66,38 @@
     </div>
 
 
+
 <script type="text/javascript">
-   $(document).ready(function () {
-    $(".answer").click(function () {
-        var parent_id = $(this).attr('name');
-         $.ajax({
-           type: "POST",
-           data: {parent_id: parent_id,
-           'csrfmiddlewaretoken': '{{ csrf_token }}',},
-           success: function(response) {
-              console.log("success")
-           },
+
+
+/* $(document).ready(function () {
+    $("").click(function () {
+    var parent_id = $(this).attr('name');
+    $.ajax({
+                type: "POST",
+                data: {'parent_id': parent_id,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'},
+
+                success: function(response) {
+                     console.log("success, ", parent_id)
+                    },
+            })
         })
-    })
-})
+    });
+*/
+
+function diplay_hide (blockClass)
+{
+    if ($(blockClass).css('display') == 'none')
+        {
+            $(blockClass).animate({height: 'show'}, 500);
+        }
+    else
+        {
+            $(blockClass).animate({height: 'hide'}, 500);
+        }
+}
+
 </script>
 
 {% endblock %}
