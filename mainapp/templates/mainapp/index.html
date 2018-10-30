@@ -50,6 +50,7 @@
             </form>
       {% if user.is_authenticated %}
             <a href="/profile"> Profile {{ user.username }}</a>
+            <a href="/logout" class="ml-2">Logout</a>
       {% else %}
             <form class="form-inline my-2 my-lg-0" method="post">
                 {% csrf_token %}
@@ -68,6 +69,15 @@
 
 {% block post_category %}
 {% endblock %}
+
+{% block messages %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+{% endblock %}
+
 
 </body>
 </html>

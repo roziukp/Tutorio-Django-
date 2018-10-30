@@ -42,7 +42,7 @@ class Registr(View):
 # дві функці на одному шаблоні поки що не працює
 class Login(View):
     template_name = 'mainapp/index.html'
-
+    context = {}
     def get(self, request):
         return render(request, self.template_name, {})
 
@@ -54,6 +54,9 @@ class Login(View):
             auth.login(request, user=user)
             messages.success(request, 'User is logged!')
             return redirect('/')
+        else:
+            self.context['error']='Login error! Try again'
+            return render(request, 'mainapp/index.html', self.context)
 
 
 @login_required
